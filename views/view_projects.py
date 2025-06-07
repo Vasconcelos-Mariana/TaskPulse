@@ -3,6 +3,7 @@ from tkinter import messagebox
 import os
 import json
 from controllers import new_project as controller
+from utils.ui import center_window
 
 
 class ViewProjectsWindow(ctk.CTkToplevel):
@@ -10,9 +11,8 @@ class ViewProjectsWindow(ctk.CTkToplevel):
         super().__init__()
         self.main_window = main_window
         self.title("View Projects")
-        self.geometry("400x420")
+        self.geometry(center_window(350, 380))
         self.resizable(False, False)
-
         self.build_ui()
 
     def build_ui(self):

@@ -3,6 +3,7 @@ from PIL import Image
 import os
 from views.new_project import NewProjectWindow
 from views.view_projects import ViewProjectsWindow
+from utils.ui import center_window
 
 
 
@@ -12,9 +13,8 @@ class MainWindow(ctk.CTk):
         super().__init__()
 
         self.title('Time Manager')
-        self.geometry('350x380')
+        self.geometry(center_window(350, 380))
         self.resizable(False,False)
-
         ctk.set_appearance_mode('light')
         ctk.set_default_color_theme('blue')
 

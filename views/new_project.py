@@ -3,6 +3,7 @@ import traceback   # Testin ID
 import customtkinter as ctk
 from tkinter import messagebox
 from controllers import new_project as controller
+from utils.ui import center_window
 
 
 class NewProjectWindow(ctk.CTkToplevel):
@@ -11,7 +12,7 @@ class NewProjectWindow(ctk.CTkToplevel):
         self.main_window = main_window
         self.selected_tags = []
         self.title("Creating New Project")
-        self.geometry('330x350')
+        self.geometry(center_window(350, 380))
         self.build_ui()
         self.resizable(False, False)
 
