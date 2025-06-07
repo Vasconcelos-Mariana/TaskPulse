@@ -33,9 +33,9 @@ def save_project(project: dict):
                 projects = json.load(f)
             except json.JSONDecodeError:
                 projects = []
-            projects.append(project)
-        with open(PROJECTS_FILE, "w", encoding="utf-8") as f:
-            json.dump(projects, f, indent=4)
+    projects.append(project)
+    with open(PROJECTS_FILE, "w", encoding="utf-8") as f:
+        json.dump(projects, f, indent=4)
 
 def create_project(name: str, description: str, tags: list[str], deadline: str = "") -> dict:
     if len(name) > MAX_CHARS:
