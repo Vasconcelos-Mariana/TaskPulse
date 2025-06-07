@@ -5,6 +5,7 @@ from views.view_projects import ViewProjectsFrame
 from views.settings import SettingsFrame
 from views.settings import load_theme_preference
 from views.start_session import StartSessionFrame
+from views.timer import TimerFrame
 from utils.ui import center_window
 
 class AppController(ctk.CTk):
@@ -25,17 +26,17 @@ class AppController(ctk.CTk):
         self.frames["view_projects"] = ViewProjectsFrame(self, self)
         self.frames["settings"] = SettingsFrame(self, self)
         self.frames["start_session"] = StartSessionFrame(self,self)
+        self.frames["timer"] = TimerFrame(self,self)
 
         for frame in self.frames.values():
             frame.place_forget()
 
-    def show_frame(self, name: str):
-        if name not in self.frames:
-            return
+    def show_frame(self, name, **kwargs):
+        frame = self.frames[name]
+        frame.tkraise()
 
-# Bug correction - hide all the frames so they won't show at the same time
-        for frame in self.frames.values():
-            frame.place_forget()
+        if name == "timer" and "project" in kwargs:
+            frame.start(kwargs["project"])
 
         self.frames[name].place(relx=0.5, rely=0.5, anchor="center")
 
