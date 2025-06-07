@@ -1,0 +1,6 @@
+# .gitignore para Python + PyCharm
+__pycache__/
+*.py[cod]
+.venv/
+.idea/
+*.log
