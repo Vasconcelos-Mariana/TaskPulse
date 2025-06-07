@@ -55,5 +55,41 @@ def create_project(name: str, description: str, tags: list[str], deadline: str =
     save_project(project)
     return project
 
+def load_existing_tags():
+    if os.path.exists(TAGS_FILE):
+        with open(TAGS_FILE, "r", encoding="utf-8") as f:
+            try:
+                return json.load(f)
+            except json.JSONDecodeError:
+                return []
+    return []
 
+def save_tag(tag: str):
+    tags = load_existing_tags()
+    if tag not in tags:
+        tags.append(tag)
+        with open(TAGS_FILE, "w", encoding="utf-8") as f:
+            json.dump(tags, f, indent=4)
+
+def suggest_tags(prefix: str):
+    tags = load_existing_tags()
+    return [tag for tag in tags if tag.lower().startswith(prefix.lower())]
+
+def validate_tag_limit(current_tags: list[str]) -> bool:
+    return len(current_tags) < MAX_TAGS
+
+def peek_next_project_id():
+    if os.path.exists(ID_FILE):
+        with open(ID_FILE, "r") as f:
+            last_id = int(f.read().strip())
+    else:
+        last_id = 0
+    return last_id + 1
+
+def validate_deadline_input(self, value: str) -> bool:
+    if value == "":
+        return True
+    if value.count(",") > 1:
+        return False
+    return all(c.isdigit() or c == "," for c in value)
 

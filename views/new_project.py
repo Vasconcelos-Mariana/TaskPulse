@@ -61,7 +61,6 @@ class NewProjectWindow(ctk.CTkToplevel):
         label_description.grid(row=1, column=0, padx=(15, 5), pady=0, sticky="nw")
         self.description_input = ctk.CTkTextbox(
             form_frame,
-            placeholder_text="Insert here your brief description for the project",
             width=180,
             height=80
         )
@@ -78,6 +77,97 @@ class NewProjectWindow(ctk.CTkToplevel):
         )
         self.deadline_input.grid(row=2, column=1, padx=(0, 5), pady=(2, 2), sticky="w")
 
+# Tags
+        label_tags = ctk.CTkLabel(form_frame, text="Tags")
+        label_tags.grid(row=3, column=0, padx=(15, 5), pady=5, sticky="nw")
 
+        tag_row_frame = ctk.CTkFrame(form_frame, fg_color="transparent")
+        tag_row_frame.grid(row=3, column=1, padx=(0, 5), pady=5, sticky="nw")
 
+        self.nova_tag_input = ctk.CTkEntry(tag_row_frame, placeholder_text="New tag", width=120)
+        self.nova_tag_input.pack(side="left", padx=(0, 5), pady=0)
+        self.nova_tag_input.bind("<KeyRelease>", self.on_tag_input)
+
+        self.btn_add_tag = ctk.CTkButton(tag_row_frame, text="Add", fg_color="#4d7c85", width=50, command=self.add_tag)
+        self.btn_add_tag.pack(side="left", pady=0)
+
+        self.suggestions_label = ctk.CTkLabel(form_frame, text="", text_color="gray")
+        self.suggestions_label.grid(row=4, column=1, sticky="w", padx=5)
+
+        self.tags_display_frame = ctk.CTkFrame(form_frame, fg_color="transparent")
+        self.tags_display_frame.grid(row=4, column=1, sticky="w", padx=5, pady=(2, 2))
+
+# End button
+
+        button_frame = ctk.CTkFrame(self, fg_color="transparent")
+        button_frame.pack(pady=10, fill="x")
+
+        inner_frame = ctk.CTkFrame(button_frame, fg_color="transparent")
+        inner_frame.pack()
+
+        back_button = ctk.CTkButton(
+            inner_frame,
+            text="Main menu",
+            fg_color="#4d7c85",
+            hover_color="#3d8491",
+            command=self.main_menu,
+            width=100
+        )
+        back_button.pack(side="left", padx=25)
+
+        create_button = ctk.CTkButton(
+            inner_frame,
+            text="Create Project",
+            fg_color="#4d7c85",
+            hover_color="#3d8491",
+            command=self.create_project,
+            width=100
+        )
+        create_button.pack(side="left", padx=22)
+
+# Tag function .
+    def on_tag_input(self, event):
+        prefix = self.nova_tag_input.get().strip()
+        if not prefix:
+            self.suggestions_label.configure(text="")
+            return
+        suggestions = controller.suggest_tags(prefix)
+        self.suggestions_label.configure(text=", ".join(suggestions[:3]) if suggestions else "No suggestions")
+
+    def add_tag(self):
+        tag = self.nova_tag_input.get().strip()
+        if not tag:
+            return
+        if tag in self.selected_tags:
+            messagebox.showwarning("Warning", "Tag already added.")
+            return
+        if not controller.validate_tag_limit(self.selected_tags):
+            messagebox.showerror("Error", "Limit of 3 tags per project")
+            return
+
+        self.selected_tags.append(tag)
+        controller.save_tag(tag)
+        self.nova_tag_input.delete(0, "end")
+        self.suggestions_label.configure(text="")
+
+        for widget in self.tags_display_frame.winfo_children():
+            widget.destroy()
+        for t in self.selected_tags:
+            tag_label = ctk.CTkLabel(self.tags_display_frame, text=t, fg_color="#ddddff", text_color="black", corner_radius=5, padx=6)
+            tag_label.pack(side="left", padx=2)
+
+    def create_project(self):
+        name = self.name_input.get().strip()
+        description = self.description_input.get("1.0", "end").strip()
+        deadline = self.deadline_input.get().strip()
+        try:
+            project = controller.create_project(name, description, self.selected_tags, deadline)
+            messagebox.showinfo("Success", f"Project '{project['name']}' created.")
+            self.main_menu()
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
+
+    def main_menu(self):
+        self.destroy()
+        self.main_window.deiconify()
 
