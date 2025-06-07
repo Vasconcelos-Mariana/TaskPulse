@@ -6,6 +6,7 @@ class MainMenuFrame(ctk.CTkFrame):
 
     def __init__(self, parent, controller):
         super().__init__(parent)
+        self.place(relwidth=1, relheight=1)
         self.pack_propagate(False)
         self.configure(width=330, height=360)
         self.controller = controller

@@ -7,24 +7,26 @@ from controllers import new_project as controller
 
 class ViewProjectsFrame(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(parent)
+        super().__init__(parent, fg_color="#CCCCCC")
         self.pack_propagate(False)
-        self.configure(width=330, height=360)
+        self.configure(width=330, height=380)
         self.controller = controller
         self.build_ui()
 
     def build_ui(self):
-        title = ctk.CTkLabel(self, text="All Projects", font=ctk.CTkFont(size=20, weight="bold"))
-        title.pack(pady=(15, 10))
+        container = ctk.CTkFrame(self, fg_color="#DDDDDD", corner_radius=12)
+        container.pack(padx=10, pady=(15, 10), fill="both", expand=False)
 
-        self.scroll_frame = ctk.CTkScrollableFrame(self, width=370, height=240)
-        self.scroll_frame.pack(pady=5, padx=10, fill="both", expand=False)
+        title = ctk.CTkLabel(container, text="All Projects", font=ctk.CTkFont(size=20, weight="bold"))
+        title.pack(pady=(10, 5))
+
+        self.scroll_frame = ctk.CTkScrollableFrame(container, width=370, height=240, fg_color="#DDDDDD")
+        self.scroll_frame.pack(padx=10, pady=(0, 10), fill="both", expand=False)
 
         self.load_projects()
 
         back_button = ctk.CTkButton(self, text="Main Menu", width=100, command=self.return_main_menu)
         back_button.pack(pady=5)
-
     def load_projects(self):
         for widget in self.scroll_frame.winfo_children():
             widget.destroy()

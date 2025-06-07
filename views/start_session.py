@@ -4,7 +4,7 @@ from controllers import start_session as controller
 
 class StartSessionFrame(ctk.CTkFrame):
     def __init__(self, parent, app_controller):
-        super().__init__(parent)
+        super().__init__(parent, fg_color="#CCCCCC")
         self.app_controller = app_controller
         self.projects = []
         self.build_ui()
@@ -13,7 +13,7 @@ class StartSessionFrame(ctk.CTkFrame):
         title_label = ctk.CTkLabel(self, text="Start Session", font=ctk.CTkFont(size=24, weight="bold"))
         title_label.pack(pady=(15, 10))
 
-        self.scroll_frame = ctk.CTkScrollableFrame(self, width=300, height=220)
+        self.scroll_frame = ctk.CTkScrollableFrame(self, width=300, height=240)
         self.scroll_frame.pack(padx=20, pady=5, fill="both", expand=False)
 
         self.refresh_project_list()

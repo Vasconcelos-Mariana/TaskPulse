@@ -16,33 +16,84 @@ class TimerFrame(ctk.CTkFrame):
         self.build_ui()
 
     def build_ui(self):
-        self.main_frame = ctk.CTkFrame(self, corner_radius=12)
-        self.main_frame.pack(padx=20, pady=20, fill="both", expand=True)
+        self.configure(fg_color="#f3f4f6")  # fundo suave e moderno
 
-        self.title_label = ctk.CTkLabel(self.main_frame, text="", font=ctk.CTkFont(size=20, weight="bold"))
-        self.title_label.pack(pady=(15, 5))
+        self.main_frame = ctk.CTkFrame(
+            self,
+            corner_radius=16,
+            fg_color = "#cccccc",
+            width=330,
+            height=360
+        )
+        self.main_frame.pack(expand=True)
+        self.main_frame.pack_propagate(False)
 
-        self.time_display = ctk.CTkLabel(self.main_frame, text="00:00:00", font=ctk.CTkFont(size=38, weight="bold"))
-        self.time_display.pack(pady=(5, 5))
+        self.title_label = ctk.CTkLabel(
+            self.main_frame,
+            text="",
+            font=ctk.CTkFont(size=20, weight="bold"),
+            text_color="#1f2937"
+        )
+        self.title_label.pack(pady=(25, 10))
 
-        self.progress_label = ctk.CTkLabel(self.main_frame, text="0%", font=ctk.CTkFont(size=16))
-        self.progress_label.pack(pady=(5, 5))
+        self.time_display = ctk.CTkLabel(
+            self.main_frame,
+            text="00:00:00",
+            font=ctk.CTkFont(size=40, weight="bold"),
+            text_color="#111827"
+        )
+        self.time_display.pack(pady=(0, 5))
 
-        self.progress_bar = ctk.CTkProgressBar(self.main_frame, width=240)
-        self.progress_bar.pack(pady=(5, 15))
+        self.progress_label = ctk.CTkLabel(
+            self.main_frame,
+            text="∞ (no deadline)",
+            font=ctk.CTkFont(size=14),
+            text_color="#6b7280"
+        )
+        self.progress_label.pack(pady=(0, 5))
+
+        self.progress_bar = ctk.CTkProgressBar(
+            self.main_frame,
+            width=280,
+            progress_color="#3b82f6",
+            fg_color="#e5e7eb"
+        )
+        self.progress_bar.pack(pady=(5, 20))
         self.progress_bar.set(0)
 
         self.button_frame = ctk.CTkFrame(self.main_frame, fg_color="transparent")
-        self.button_frame.pack(pady=(5, 5))
+        self.button_frame.pack(pady=(0, 10))
 
-        self.toggle_button = ctk.CTkButton(self.button_frame, text="Start", command=self.toggle_timer, width=80)
-        self.toggle_button.pack(side="left", padx=5)
+        self.toggle_button = ctk.CTkButton(
+            self.button_frame,
+            text="Start",
+            command=self.toggle_timer,
+            width=100
+        )
+        self.toggle_button.pack(side="left", padx=10)
 
-        self.stop_button = ctk.CTkButton(self.button_frame, text="Stop", fg_color="#c94c4c", hover_color="#a23c3c",command=self.stop_timer, width=80)
-        self.stop_button.pack(side="left", padx=5)
+        self.stop_button = ctk.CTkButton(
+            self.button_frame,
+            text="Stop",
+            command=self.stop_timer,
+            width=100,
+            fg_color="#ef4444",
+            hover_color="#b91c1c"
+        )
+        self.stop_button.pack(side="left", padx=10)
 
-        self.cancel_button = ctk.CTkButton(self.main_frame, text="Cancel", command=self.return_to_project_selection)
-        self.cancel_button.pack(pady=(10, 0))
+        self.cancel_button = ctk.CTkButton(
+            self.main_frame,
+            text="Cancel",
+            command=self.return_to_project_selection,
+            width=220,
+            fg_color="#9ca3af",
+            hover_color="#6b7280",
+            text_color="white"
+        )
+        self.cancel_button.pack(pady=(10, 10))
+
+
 
     def start(self, project):
         self.project = project

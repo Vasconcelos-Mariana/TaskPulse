@@ -14,6 +14,7 @@ class AppController(ctk.CTk):
         self.title('Time Manager')
         self.geometry(center_window(360,390))
         self.resizable(False, False)
+        self.configure(fg_color="#CCCCCC")
         ctk.set_appearance_mode(load_theme_preference())
 
         self.frames = {}
