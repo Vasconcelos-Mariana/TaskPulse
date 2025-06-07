@@ -2,6 +2,9 @@ import customtkinter as ctk
 from utils.ui import center_window
 import json
 import os
+import tkinter.messagebox as msgbox
+from utils.ui import CustomConfirmDialog
+
 
 SETTINGS_FILE = os.path.join(os.path.dirname(__file__), "..", "settings.json")
 
@@ -25,6 +28,15 @@ class SettingsWindow(ctk.CTkToplevel):
         back_button = ctk.CTkButton(self, text="Back", command=self.return_to_main)
         back_button.pack(pady=(5, 10))
 
+        clear_button = ctk.CTkButton(
+            self,
+            text="Reset application data",
+            fg_color="#aa4444",
+            hover_color="#cc5555",
+            command=self.confirm_reset
+        )
+        clear_button.pack(pady=(10, 10))
+
     def change_mode(self, value):
         ctk.set_appearance_mode(value.lower())
         save_theme_preference(value)
@@ -32,6 +44,27 @@ class SettingsWindow(ctk.CTkToplevel):
     def return_to_main(self):
         self.destroy()
         self.master.deiconify()
+
+    def confirm_reset(self):
+        dialog = CustomConfirmDialog(
+            self,
+            message="⚠️ This will erase all saved projects, tags and counters.\n\nType 'Confirm' to proceed:",
+            title="Confirm Reset"
+        )
+        self.wait_window(dialog)
+        user_input = dialog.result
+
+        if user_input is None:  # User cancelled
+            return
+
+        if user_input.strip() == "Confirm":
+            reset_all_data()
+            msgbox.showinfo("Done", "Application data has been reset.")
+
+        else:
+            msgbox.showerror("Error", "Confirmation failed. Please type 'Confirm' to proceed")
+
+
 
 def save_theme_preference(theme: str):
     with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
@@ -47,3 +80,12 @@ def load_theme_preference():
             pass
     return "system"
 
+def reset_all_data():
+    for file in ["projects.json", "tags.json", "project_id_counter.txt"]:
+        path = os.path.join(os.path.dirname(__file__), "..", file)
+        if os.path.exists(path):
+            with open(path, "w", encoding="utf-8") as f:
+                if path.endswith(".json"):
+                    f.write("[]")
+                else:
+                    f.write("0")

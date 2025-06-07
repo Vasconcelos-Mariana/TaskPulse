@@ -3,8 +3,12 @@ __pycache__/
 *.py[cod]
 .venv/
 .idea/
+
 *.log
+*.tmp
+
 project_id_counter.txt
 projects.json
 tags.json
+settings.json
 
