@@ -28,6 +28,7 @@ class MainMenuFrame(ctk.CTkFrame):
             hover_color = '#3c9971',
             width = 170,
             height = 35,
+            command=self.open_start_session
         )
         start_button.pack(pady=20)
 
@@ -120,3 +121,6 @@ class MainMenuFrame(ctk.CTkFrame):
 
     def open_settings(self):
         self.controller.show_frame("settings")
+
+    def open_start_session(self):
+        self.controller.show_frame("start_session")

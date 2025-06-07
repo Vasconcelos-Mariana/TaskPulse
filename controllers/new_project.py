@@ -9,8 +9,6 @@ ID_FILE = "project_id_counter.txt"
 PROJECTS_FILE = "projects.json"
 TAGS_FILE = 'tags.json'
 
-# ----- Project logic -----
-
 def get_id():
     if os.path.exists(ID_FILE):
         with open(ID_FILE, 'r') as f:

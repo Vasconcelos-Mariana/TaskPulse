@@ -4,6 +4,7 @@ from views.new_project import NewProjectFrame
 from views.view_projects import ViewProjectsFrame
 from views.settings import SettingsFrame
 from views.settings import load_theme_preference
+from views.start_session import StartSessionFrame
 from utils.ui import center_window
 
 class AppController(ctk.CTk):
@@ -23,6 +24,7 @@ class AppController(ctk.CTk):
         self.frames["new_project"] = NewProjectFrame(self, self)
         self.frames["view_projects"] = ViewProjectsFrame(self, self)
         self.frames["settings"] = SettingsFrame(self, self)
+        self.frames["start_session"] = StartSessionFrame(self,self)
 
         for frame in self.frames.values():
             frame.place_forget()
