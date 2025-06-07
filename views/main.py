@@ -87,3 +87,31 @@ class MainWindow(ctk.CTk):
         resume_button = ctk.CTkButton(button_row, text="Statistics", **button_style)
         resume_button.pack(side="left", padx=10)
 
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        gear_image_path = os.path.join(script_dir, "..", "utils", "engrenagem.png")
+        gear_icon = ctk.CTkImage(
+            light_image=Image.open(gear_image_path),
+            dark_image=Image.open(gear_image_path),
+            size=(24, 24)
+        )
+
+        settings_button = ctk.CTkButton(
+            self,
+            image=gear_icon,
+            text="",
+            width=40,
+            height=40,
+            fg_color="transparent",
+            hover_color="#3d8491",
+            border_width=0
+        )
+        settings_button.place(relx=0.99, rely=1, anchor="se")
+
+
+        version_label = ctk.CTkLabel(
+            self,
+            text="   v 0.1.0",
+            font=ctk.CTkFont("Calibri", size=12),
+            text_color="#5a5a5a"
+        )
+        version_label.place(relx=0.01, rely=1, anchor="sw")
