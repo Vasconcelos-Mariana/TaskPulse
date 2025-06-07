@@ -1,3 +1,5 @@
+import traceback   # Testin ID
+
 import customtkinter as ctk
 from tkinter import messagebox
 from controllers import new_project as controller
@@ -30,13 +32,7 @@ class NewProjectWindow(ctk.CTkToplevel):
 # To push ID to top right
         ctk.CTkLabel(header_frame, text="").pack(side="left", expand=True)
 
-# TESTING - Define ID before using it ???
-        try:
-            next_id = controller.peek_next_project_id()
-        except Exception as e:
-            print(f"[ERRO] Não foi possível obter ID: {e}")
-            next_id = "?"
-
+        next_id = controller.peek_next_project_id()
         id_label = ctk.CTkLabel(header_frame, text=f"ID: {next_id}", text_color="gray", font=ctk.CTkFont(size=10))
         id_label.pack(side="right")
 
@@ -147,6 +143,7 @@ class NewProjectWindow(ctk.CTkToplevel):
 
         self.selected_tags.append(tag)
         controller.save_tag(tag)
+        controller.save_tag(tag)
         self.nova_tag_input.delete(0, "end")
         self.suggestions_label.configure(text="")
 
@@ -158,7 +155,7 @@ class NewProjectWindow(ctk.CTkToplevel):
 
     def create_project(self):
         name = self.name_input.get().strip()
-        description = self.description_input.get("1.0", "end").strip()
+        description = self.description_input.get("1.0", "end-1c").strip()
         deadline = self.deadline_input.get().strip()
         try:
             project = controller.create_project(name, description, self.selected_tags, deadline)

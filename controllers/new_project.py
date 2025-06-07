@@ -33,7 +33,7 @@ def save_project(project: dict):
                 projects = json.load(f)
             except json.JSONDecodeError:
                 projects = []
-        projects.append(project)
+            projects.append(project)
         with open(PROJECTS_FILE, "w", encoding="utf-8") as f:
             json.dump(projects, f, indent=4)
 
@@ -85,11 +85,4 @@ def peek_next_project_id():
     else:
         last_id = 0
     return last_id + 1
-
-def validate_deadline_input(self, value: str) -> bool:
-    if value == "":
-        return True
-    if value.count(",") > 1:
-        return False
-    return all(c.isdigit() or c == "," for c in value)
 
