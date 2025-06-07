@@ -1,6 +1,8 @@
 import customtkinter as ctk
 from PIL import Image
 import os
+from views.new_project import NewProjectWindow
+
 
 class MainWindow(ctk.CTk):
 
@@ -64,7 +66,7 @@ class MainWindow(ctk.CTk):
         button_row1 = ctk.CTkFrame(self,fg_color="transparent")
         button_row1.pack(pady=5)
 
-        new_button = ctk.CTkButton(button_row1, text="New Project", **button_style)
+        new_button = ctk.CTkButton(button_row1, text="New Project",command=self.open_new_project, **button_style)
         new_button.pack(side="left", padx=10)
 
         view_button = ctk.CTkButton(button_row1, text="View Project", **button_style)
@@ -115,3 +117,7 @@ class MainWindow(ctk.CTk):
             text_color="#5a5a5a"
         )
         version_label.place(relx=0.01, rely=1, anchor="sw")
+
+    def open_new_project(self):
+        self.withdraw()
+        NewProjectWindow(self)
