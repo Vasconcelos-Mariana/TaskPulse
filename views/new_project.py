@@ -22,25 +22,27 @@ class NewProjectFrame(ctk.CTkFrame):
 
     def build_ui(self):
         header_frame = ctk.CTkFrame(self, fg_color="transparent")
-        header_frame.pack(pady=(10, 5), fill="x", padx=10)
+        header_frame.pack(pady=(0, 0), fill="x", padx=10)
 
-        title_label = ctk.CTkLabel(header_frame, text="New Project", font=ctk.CTkFont(size=20))
-        title_label.pack(side="left", padx=10)
+        title_label = ctk.CTkLabel(header_frame, text="New Project", font=ctk.CTkFont(size=24, weight="bold"))
+        title_label.pack(side="left", padx=10,pady=10)
 
-# To push ID to top right
+        # To push ID to top right
         ctk.CTkLabel(header_frame, text="").pack(side="left", expand=True)
 
         next_id = controller.peek_next_project_id()
         id_label = ctk.CTkLabel(header_frame, text=f"ID: {next_id}", text_color="gray", font=ctk.CTkFont(size=10))
         id_label.pack(side="right")
 
-        form_frame = ctk.CTkFrame(self, width=350, height=240)
-        form_frame.pack(pady=5, padx=20)
-        form_frame.grid_propagate(False)
+        form_frame = ctk.CTkFrame(self, fg_color="transparent")
+        form_frame.pack(pady=(0, 0), padx=25, fill="x")
+        form_frame.configure(height=230)
+        form_frame.pack_propagate(False)
 
 # Name
         label_name = ctk.CTkLabel(form_frame, text="Name")
-        label_name.grid(row=0, column=0, padx=(15, 5), pady=5, sticky="e")
+        label_name.grid(row=0, column=0, sticky="e", padx=(0, 10), pady=5)
+
         vcmd = self.register(lambda P: len(P) <= controller.MAX_CHARS)
         self.name_input = ctk.CTkEntry(
             form_frame,
@@ -90,36 +92,37 @@ class NewProjectFrame(ctk.CTkFrame):
         self.suggestions_label = ctk.CTkLabel(form_frame, text="", text_color="gray")
         self.suggestions_label.grid(row=4, column=1, sticky="w", padx=5)
 
-        self.tags_display_frame = ctk.CTkFrame(form_frame, fg_color="transparent")
+        self.tags_display_frame = ctk.CTkFrame(form_frame, fg_color="transparent", height=24)
         self.tags_display_frame.grid(row=4, column=1, sticky="w", padx=5, pady=(2, 2))
+        self.tags_display_frame.grid_propagate(False)
 
 # End button
 
         button_frame = ctk.CTkFrame(self, fg_color="transparent")
-        button_frame.pack(pady=10, fill="x")
+        button_frame.pack(side="bottom",padx = 45, pady=10)
 
         inner_frame = ctk.CTkFrame(button_frame, fg_color="transparent")
-        inner_frame.pack()
+        inner_frame.pack(padx=5)
 
         back_button = ctk.CTkButton(
             inner_frame,
-            text="Main menu",
+            text="Cancel",
             fg_color="#4d7c85",
             hover_color="#3d8491",
             command=self.main_menu,
             width=100
         )
-        back_button.pack(side="left", padx=25)
+        back_button.pack(side="left")
 
         create_button = ctk.CTkButton(
             inner_frame,
-            text="Create Project",
+            text="Save",
             fg_color="#4d7c85",
             hover_color="#3d8491",
             command=self.create_project,
-            width=100
+            width=120
         )
-        create_button.pack(side="left", padx=22)
+        create_button.pack(side="right",padx=15)
 
 # Tag function .
     def on_tag_input(self, event):
