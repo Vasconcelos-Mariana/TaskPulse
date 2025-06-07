@@ -21,3 +21,39 @@ def get_id():
     with open(ID_FILE, "w") as f:
         f.write(str(new_id))
     return new_id
+
+def fields_validation(name: str, description: str, tags: list[str]) -> bool:
+    return bool(name.strip()) and bool(description.strip()) and len(tags) > 0
+
+def save_project(project: dict):
+    projects = []
+    if os.path.exists(PROJECTS_FILE):
+        with open(PROJECTS_FILE, 'r', encoding='utf-8') as f:
+            try:
+                projects = json.load(f)
+            except json.JSONDecodeError:
+                projects = []
+        projects.append(project)
+        with open(PROJECTS_FILE, "w", encoding="utf-8") as f:
+            json.dump(projects, f, indent=4)
+
+def create_project(name: str, description: str, tags: list[str], deadline: str = "") -> dict:
+    if len(name) > MAX_CHARS:
+        raise ValueError(f"Name must be at most {MAX_CHARS} characters.")
+    if not fields_validation(name, description, tags):
+        raise ValueError("Name, description and at least one tag are required.")
+
+    project = {
+        "id": get_id(),
+        "name": name.strip(),
+        "description": description.strip(),
+        "tags": tags,
+        "deadline": deadline.strip(),
+        "created_at": datetime.now().isoformat()
+    }
+
+    save_project(project)
+    return project
+
+
+
