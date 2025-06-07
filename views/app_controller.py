@@ -3,14 +3,16 @@ from views.main_menu import MainMenuFrame
 from views.new_project import NewProjectFrame
 from views.view_projects import ViewProjectsFrame
 from views.settings import SettingsFrame
+from views.settings import load_theme_preference
+from utils.ui import center_window
 
 class AppController(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title('Time Manager')
-        self.geometry("350x380")
+        self.geometry(center_window(360,390))
         self.resizable(False, False)
-        ctk.set_default_color_theme('blue')
+        ctk.set_appearance_mode(load_theme_preference())
 
         self.frames = {}
         self.build_frames()
@@ -35,7 +37,6 @@ class AppController(ctk.CTk):
 
         self.frames[name].place(relx=0.5, rely=0.5, anchor="center")
 
-        # Se o frame tiver método on_show, invoca-o
         if hasattr(self.frames[name], "on_show"):
             self.frames[name].on_show()
 

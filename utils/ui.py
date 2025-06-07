@@ -2,18 +2,12 @@ import os
 import customtkinter as ctk
 
 def center_window(width: int, height: int) -> str:
-    screen_width = 800  # Default fallback
-    screen_height = 600
-
-    try:
-        import tkinter as tk
-        root = tk.Tk()
-        root.withdraw()  # Oculta a janela temporária
-        screen_width = root.winfo_screenwidth()
-        screen_height = root.winfo_screenheight()
-        root.destroy()
-    except:
-        pass
+    import tkinter as tk
+    root = tk.Tk()
+    root.withdraw()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    root.destroy()
 
     x = (screen_width // 2) - (width // 2)
     y = (screen_height // 2) - (height // 2)

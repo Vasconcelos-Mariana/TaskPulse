@@ -11,6 +11,8 @@ SETTINGS_FILE = os.path.join(os.path.dirname(__file__), "..", "settings.json")
 class SettingsFrame(ctk.CTkFrame):
     def __init__(self, parent, controller):
         super().__init__(parent)
+        self.pack_propagate(False)
+        self.configure(width=330, height=360)
         self.controller = controller
 
         row = ctk.CTkFrame(self, fg_color="transparent")
