@@ -1,20 +1,15 @@
-import traceback   # Testin ID
 
 import customtkinter as ctk
 from tkinter import messagebox
 from controllers import new_project as controller
-from utils.ui import center_window
 
 
-class NewProjectWindow(ctk.CTkToplevel):
-    def __init__(self, main_window):
-        super().__init__()
-        self.main_window = main_window
+class NewProjectFrame(ctk.CTkFrame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        self.controller = controller
         self.selected_tags = []
-        self.title("Creating New Project")
-        self.geometry(center_window(350, 380))
         self.build_ui()
-        self.resizable(False, False)
 
     def validate_deadline_input(self, value: str) -> bool:
         if value == "":
@@ -70,6 +65,8 @@ class NewProjectWindow(ctk.CTkToplevel):
         self.deadline_input = ctk.CTkEntry(
             form_frame,
             placeholder_text="in minutes",
+            validate="key",
+            validatecommand=(vcmd_deadline, "%P"),
             width=180,
         )
         self.deadline_input.grid(row=2, column=1, padx=(0, 5), pady=(2, 2), sticky="w")
@@ -144,7 +141,6 @@ class NewProjectWindow(ctk.CTkToplevel):
 
         self.selected_tags.append(tag)
         controller.save_tag(tag)
-        controller.save_tag(tag)
         self.nova_tag_input.delete(0, "end")
         self.suggestions_label.configure(text="")
 
@@ -166,6 +162,5 @@ class NewProjectWindow(ctk.CTkToplevel):
             messagebox.showerror("Error", str(e))
 
     def main_menu(self):
-        self.destroy()
-        self.main_window.deiconify()
+        self.controller.show_frame("main")
 

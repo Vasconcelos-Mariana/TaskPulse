@@ -8,12 +8,10 @@ from utils.ui import CustomConfirmDialog
 
 SETTINGS_FILE = os.path.join(os.path.dirname(__file__), "..", "settings.json")
 
-class SettingsWindow(ctk.CTkToplevel):
-    def __init__(self, parent):
-        super().__init__()
-        self.title("Settings")
-        self.geometry(center_window(350, 380))
-        self.resizable(False, False)
+class SettingsFrame(ctk.CTkFrame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        self.controller = controller
 
         row = ctk.CTkFrame(self, fg_color="transparent")
         row.pack(pady=(20, 10))
@@ -42,8 +40,7 @@ class SettingsWindow(ctk.CTkToplevel):
         save_theme_preference(value)
 
     def return_to_main(self):
-        self.destroy()
-        self.master.deiconify()
+        self.controller.show_frame("main")
 
     def confirm_reset(self):
         dialog = CustomConfirmDialog(

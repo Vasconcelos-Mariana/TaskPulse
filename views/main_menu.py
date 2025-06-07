@@ -1,23 +1,12 @@
 import customtkinter as ctk
 from PIL import Image
 import os
-from views.new_project import NewProjectWindow
-from views.view_projects import ViewProjectsWindow
-from utils.ui import center_window
-from views.settings import SettingsWindow
 
+class MainMenuFrame(ctk.CTkFrame):
 
-class MainWindow(ctk.CTk):
-
-    def __init__(self):
-        super().__init__()
-
-        self.title('Time Manager')
-        self.geometry(center_window(350, 380))
-        self.resizable(False,False)
-        ctk.set_appearance_mode('light')
-        ctk.set_default_color_theme('blue')
-
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        self.controller = controller
         self.build_ui()
 
     def build_ui(self):
@@ -122,13 +111,10 @@ class MainWindow(ctk.CTk):
         version_label.place(relx=0.01, rely=1, anchor="sw")
 
     def open_new_project(self):
-        self.withdraw()
-        NewProjectWindow(self)
+        self.controller.show_frame("new_project")
 
     def open_view_projects(self):
-        self.withdraw()
-        ViewProjectsWindow(self)
+        self.controller.show_frame("view_projects")
 
     def open_settings(self):
-        self.withdraw()
-        SettingsWindow(self)
+        self.controller.show_frame("settings")

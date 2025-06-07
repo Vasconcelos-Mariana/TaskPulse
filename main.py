@@ -1,9 +1,5 @@
-from views.main import MainWindow
-from views.settings import load_theme_preference
-import customtkinter as ctk
+from views.app_controller import AppController
 
-ctk.set_appearance_mode(load_theme_preference())
-
-if __name__=='__main__':
-    app = MainWindow()
+if __name__ == '__main__':
+    app = AppController()
     app.mainloop()

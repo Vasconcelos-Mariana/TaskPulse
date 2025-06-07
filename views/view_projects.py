@@ -3,24 +3,20 @@ from tkinter import messagebox
 import os
 import json
 from controllers import new_project as controller
-from utils.ui import center_window
 
 
-class ViewProjectsWindow(ctk.CTkToplevel):
-    def __init__(self, main_window):
-        super().__init__()
-        self.main_window = main_window
-        self.title("View Projects")
-        self.geometry(center_window(350, 380))
-        self.resizable(False, False)
+class ViewProjectsFrame(ctk.CTkFrame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        self.controller = controller
         self.build_ui()
 
     def build_ui(self):
         title = ctk.CTkLabel(self, text="All Projects", font=ctk.CTkFont(size=20, weight="bold"))
         title.pack(pady=(15, 10))
 
-        self.scroll_frame = ctk.CTkScrollableFrame(self, width=370, height=300)
-        self.scroll_frame.pack(pady=5, padx=10)
+        self.scroll_frame = ctk.CTkScrollableFrame(self, width=370, height=250)
+        self.scroll_frame.pack(pady=5, padx=10, fill="both", expand=False)
 
         self.load_projects()
 
@@ -64,5 +60,4 @@ class ViewProjectsWindow(ctk.CTkToplevel):
             ctk.CTkLabel(frame, text=f"Created at: {created.split('T')[0]}", font=ctk.CTkFont(size=11), text_color="gray").pack(anchor="w", padx=10, pady=(0, 5))
 
     def return_main_menu(self):
-        self.destroy()
-        self.main_window.deiconify()
+        self.controller.show_frame("main")
