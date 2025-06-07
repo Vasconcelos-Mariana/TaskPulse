@@ -5,6 +5,8 @@ from datetime import datetime
 MAX_CHARS = 24
 MAX_TAGS = 3
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 ID_FILE = "project_id_counter.txt"
 PROJECTS_FILE = "projects.json"
 TAGS_FILE = 'tags.json'

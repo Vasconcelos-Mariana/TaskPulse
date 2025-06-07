@@ -20,7 +20,19 @@ class NewProjectFrame(ctk.CTkFrame):
             return False
         return all(c.isdigit() or c == "," for c in value)
 
+    def clear_fields(self):
+        self.name_input.delete(0, "end")
+        self.description_input.delete("1.0", "end")
+        self.deadline_input.delete(0, "end")
+        self.nova_tag_input.delete(0, "end")
+        self.selected_tags = []
+        self.suggestions_label.configure(text="")
+
+        for widget in self.tags_display_frame.winfo_children():
+            widget.destroy()
+
     def build_ui(self):
+
         header_frame = ctk.CTkFrame(self, fg_color="transparent")
         header_frame.pack(pady=(0, 0), fill="x", padx=10)
 
@@ -162,10 +174,12 @@ class NewProjectFrame(ctk.CTkFrame):
         try:
             project = controller.create_project(name, description, self.selected_tags, deadline)
             messagebox.showinfo("Success", f"Project '{project['name']}' created.")
+            self.clear_fields()
             self.main_menu()
         except ValueError as e:
             messagebox.showerror("Error", str(e))
 
     def main_menu(self):
+        self.clear_fields()
         self.controller.show_frame("main")
 

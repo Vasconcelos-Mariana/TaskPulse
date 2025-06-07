@@ -17,13 +17,13 @@ class ViewProjectsFrame(ctk.CTkFrame):
         title = ctk.CTkLabel(self, text="All Projects", font=ctk.CTkFont(size=20, weight="bold"))
         title.pack(pady=(15, 10))
 
-        self.scroll_frame = ctk.CTkScrollableFrame(self, width=370, height=250)
+        self.scroll_frame = ctk.CTkScrollableFrame(self, width=370, height=240)
         self.scroll_frame.pack(pady=5, padx=10, fill="both", expand=False)
 
         self.load_projects()
 
         back_button = ctk.CTkButton(self, text="Main Menu", width=100, command=self.return_main_menu)
-        back_button.pack(pady=10)
+        back_button.pack(pady=5)
 
     def load_projects(self):
         for widget in self.scroll_frame.winfo_children():
