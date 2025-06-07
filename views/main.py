@@ -2,6 +2,8 @@ import customtkinter as ctk
 from PIL import Image
 import os
 from views.new_project import NewProjectWindow
+from views.view_projects import ViewProjectsWindow
+
 
 
 class MainWindow(ctk.CTk):
@@ -69,7 +71,7 @@ class MainWindow(ctk.CTk):
         new_button = ctk.CTkButton(button_row1, text="New Project",command=self.open_new_project, **button_style)
         new_button.pack(side="left", padx=10)
 
-        view_button = ctk.CTkButton(button_row1, text="View Project", **button_style)
+        view_button = ctk.CTkButton(button_row1, text="View Project",command=self.open_view_projects, **button_style)
         view_button.pack(side="left", padx=10)
 
         subtitle_statistics = ctk.CTkLabel(
@@ -121,3 +123,7 @@ class MainWindow(ctk.CTk):
     def open_new_project(self):
         self.withdraw()
         NewProjectWindow(self)
+
+    def open_view_projects(self):
+        self.withdraw()
+        ViewProjectsWindow(self)
