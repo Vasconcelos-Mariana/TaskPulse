@@ -4,3 +4,7 @@ __pycache__/
 .venv/
 .idea/
 *.log
+project_id_counter.txt
+projects.json
+tags.json
+

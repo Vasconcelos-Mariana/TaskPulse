@@ -4,7 +4,7 @@ import os
 from views.new_project import NewProjectWindow
 from views.view_projects import ViewProjectsWindow
 from utils.ui import center_window
-
+from views.settings import SettingsWindow
 
 
 class MainWindow(ctk.CTk):
@@ -107,7 +107,8 @@ class MainWindow(ctk.CTk):
             height=40,
             fg_color="transparent",
             hover_color="#3d8491",
-            border_width=0
+            border_width=0,
+            command = self.open_settings
         )
         settings_button.place(relx=0.99, rely=1, anchor="se")
 
@@ -127,3 +128,7 @@ class MainWindow(ctk.CTk):
     def open_view_projects(self):
         self.withdraw()
         ViewProjectsWindow(self)
+
+    def open_settings(self):
+        self.withdraw()
+        SettingsWindow(self)
