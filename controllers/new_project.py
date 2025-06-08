@@ -86,3 +86,9 @@ def peek_next_project_id():
         last_id = 0
     return last_id + 1
 
+def get_total_session_time(project):
+    total_seconds = sum(session["duration_seconds"] for session in project.get("sessions", []))
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    return f"{hours}h {minutes}min"
+
